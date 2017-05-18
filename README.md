@@ -13,3 +13,10 @@ How to use
  appId: ashorterstirngofnumbersandletters
  ```
 
+- perform a query 
+ 
+```
+define simple
+"easily understood or done; presenting no difficulty"
+
+```

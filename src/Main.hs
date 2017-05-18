@@ -7,6 +7,7 @@ import Data.Aeson
 import Data.Aeson.Lens (_String, key, values)
 import qualified Data.Char as Char
 import Data.Text hiding (take)
+import qualified Data.Text.IO as T (putStrLn)
 import Data.Text.Encoding (encodeUtf8)
 import Data.Yaml
 import Network.HTTP.Client hiding (checkResponse, responseBody, responseStatus)
@@ -69,18 +70,18 @@ main :: IO ()
 main = do
   words <- fmap (take 1) getArgs
   case words of
-    [] -> print "usage: define <word>"
+    [] -> putStrLn "usage: define <word>"
     word:_ -> do
       config <- readConfigFile
       case config of
-        Left (InvalidYaml (Just (YamlException msg))) -> print $ "Missing config gile" ++ msg
-        Left (InvalidYaml (Just (YamlParseException _ _ (YamlMark _ line column)))) -> print $ "Invalid config file, check your formatting at line: " ++ show line ++ " column: " ++ show column
-        Left (AesonException msg) -> print $ "Invalid config gile " ++ msg
-        Left x -> print $ show x
+        Left (InvalidYaml (Just (YamlException msg))) -> putStrLn $ "Missing config gile" ++ msg
+        Left (InvalidYaml (Just (YamlParseException _ _ (YamlMark _ line column)))) -> putStrLn $ "Invalid config file, check your formatting at line: " ++ show line ++ " column: " ++ show column
+        Left (AesonException msg) -> putStrLn $ "Invalid config gile " ++ msg
+        Left x -> putStrLn $ show x
         Right appConfig -> do
           definitionResponse <- getWordDefinition (getOptions appConfig) word
           case definitionResponse of
-            (Status 200 _, Just definition) ->  print definition
-            (Status 403 _, _) ->  print "Bad credentials, check your .define file"
-            (Status 404 _, _) ->  print "No definition found"
+            (Status 200 _, Just definition) ->  T.putStrLn definition
+            (Status 403 _, _) ->  putStrLn "Bad credentials, check your .define file"
+            (Status 404 _, _) ->  putStrLn "No definition found"
             otherwise ->  print definitionResponse

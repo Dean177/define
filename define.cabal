@@ -1,0 +1,31 @@
+name:                define
+version:             0.0.1.0
+synopsis:            Lookup definitions from the command line
+homepage:            https://github.com/Dean177/define#readme
+license:             BSD3
+license-file:        LICENSE
+author:              Dean Merchant
+maintainer:          deanmerchant@gmail.com
+copyright:           2017 Dean Merchant
+category:            Command Line Tool
+build-type:          Simple
+cabal-version:       >=1.10
+extra-source-files:  README.md
+
+executable define
+  hs-source-dirs:      src
+  main-is:             Main.hs
+  default-language:    Haskell2010
+  build-depends:       base >= 4.7 && < 5
+                     , aeson
+                     , bytestring
+                     , directory
+                     , filepath
+                     , http-client
+                     , http-types
+                     , lens
+                     , lens-aeson
+                     , parsec
+                     , text
+                     , wreq
+                     , yaml

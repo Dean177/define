@@ -74,9 +74,9 @@ main = do
     word:_ -> do
       config <- readConfigFile
       case config of
-        Left (InvalidYaml (Just (YamlException msg))) -> putStrLn $ "Missing config gile" ++ msg
+        Left (InvalidYaml (Just (YamlException msg))) -> putStrLn $ "Missing config file: " ++ msg
         Left (InvalidYaml (Just (YamlParseException _ _ (YamlMark _ line column)))) -> putStrLn $ "Invalid config file, check your formatting at line: " ++ show line ++ " column: " ++ show column
-        Left (AesonException msg) -> putStrLn $ "Invalid config gile " ++ msg
+        Left (AesonException msg) -> putStrLn $ "Invalid config file: " ++ msg
         Left x -> putStrLn $ show x
         Right appConfig -> do
           definitionResponse <- getWordDefinition (getOptions appConfig) word
